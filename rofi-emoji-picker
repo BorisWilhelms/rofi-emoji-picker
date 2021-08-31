@@ -1,0 +1,12 @@
+#! /bin/bash
+URL="https://www.unicode.org/Public/emoji/latest/emoji-test.txt"
+FILE="$XDG_CACHE_HOME/rofi-emoji-picker-data.txt"
+
+if [ ! -f "$FILE" ]; then
+    curl -L "$URL" -o "$FILE"
+fi
+
+readarray -t DATA < <(grep "^[^#].*fully-qualified" "$FILE" | cut -d '#' -f2 | cut -d ' ' -f 2,4-10)
+SELECTED=$(printf '%s\n' "${DATA[@]}" | rofi -dmenu -p emoji -format i)
+
+echo ${DATA[$SELECTED]} | cut -d ' ' -f 1 | xclip -selection clipboard -i
