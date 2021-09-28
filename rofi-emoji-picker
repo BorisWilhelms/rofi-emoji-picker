@@ -1,6 +1,6 @@
 #! /bin/bash
 URL="https://www.unicode.org/Public/emoji/latest/emoji-test.txt"
-FILE="$XDG_CACHE_HOME/rofi-emoji-picker-data.txt"
+FILE="${XDG_CACHE_HOME:=$HOME/.cache}/rofi-emoji-picker-data.txt"
 
 if [ ! -f "$FILE" ]; then
     curl -L "$URL" -o "$FILE"
